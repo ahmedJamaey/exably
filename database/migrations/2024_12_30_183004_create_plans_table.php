@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('duration_unit');
             $table->text('description')->nullable();
-            $table->integer('price');
+            $table->decimal('price', 8, 2);
             $table->decimal('discount_price', 8, 2);
             $table->string('discount_type');
             $table->timestamps();
