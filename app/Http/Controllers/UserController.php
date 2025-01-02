@@ -2,73 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UserRequest\StoreUserRequest;
+use App\Http\Requests\UserRequest\UpdateUserRequest;
+use App\Http\Resources\V1\UserResource\UserCollection;
+use App\Http\Resources\V1\UserResource\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        $users = User::all();
-        return $users;
+        return new UserCollection(User::get());
+        // return new UserCollection(User::where('gender', 'male')->get());
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function show($id)
     {
-        //
+        return new UserResource(User::findOrFail($id));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreUserRequest $request)
     {
-
-        // $user = User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => $request->password,
-        //     'gender' => $request->gender,
-        //     'mobile_number' => $request->mobile_number,
-        //     'role_id' => $request->role_id
-            
-        // ]);
-
         $user = User::create($request->validated());
 
         return response()->json([
             'message' => 'User added successfuly',
-            'user' => $user
+            'data' => new UserResource($user)
         ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateUserRequest $request, $id)
     {
         $user = User::findOrFail($id);
@@ -77,17 +42,13 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'User updated successfully',
-            'user' => $user
+            'data' => new UserResource($user)
         ], 200);
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        $user = User::findOrFail($id);
+        $user = User::findOrFail($id); 
 
         $user->delete();
 

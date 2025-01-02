@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\PermissionRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePermissionRequest extends FormRequest
+class StorePermissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,10 +21,9 @@ class UpdatePermissionRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('permission');
         return [
             'name' => 'required|string|max:255',
-            'model' => 'required|string|unique:permissions,model,' .$id,
+            'model' => 'required|string|unique:permissions,model',
             'can' => 'required|string|max:255'
         ];
     }
@@ -32,12 +31,16 @@ class UpdatePermissionRequest extends FormRequest
     public function messages()
     {
         return [
+            'name.required' => 'The name is required.',
             'name.string' => 'The name must be a valid string.',
             'name.max' => 'The name cannot be longer than 255 characters.',
+            'model.required' => 'The model field is required.',
             'model.string' => 'The model must be a valid string.',
             'model.unique' => 'This model already exists. Please choose a different one.',
+            'can.required' => 'The can field is required.',
             'can.string' => 'The can field must be a valid string.',
             'can.max' => 'The can field cannot be longer than 255 characters.',
         ];
     }
+
 }

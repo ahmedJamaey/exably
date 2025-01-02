@@ -10,6 +10,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('users', UserController::class);
-Route::apiResource('roles', RoleController::class);
+Route::prefix('v1')->apiResource('users', UserController::class);
+Route::prefix('v1')->apiResource('roles', RoleController::class);
 Route::apiResource('permissions', PermissionController::class);
