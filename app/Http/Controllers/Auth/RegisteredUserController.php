@@ -40,25 +40,22 @@ class RegisteredUserController extends Controller
             'system' => $request->system
         ]);
 
-//        $role = Role::where('slug', strtolower($user->system))->first();
-//        if ($role) {
-//            $user->roles()->attach($role);
-//        }
+        $role = Role::where('slug', strtolower($user->system))->first();
+        if ($role) {
+            $user->roles()->attach($role);
+        }
 
         event(new Registered($user));
 
         Auth::login($user);
         $user = Auth::user();
 
-        // تحقق من الأدوار
-//        $roles = $user->roles->pluck('slug');
 
         $token = $user->createToken('api-token');
 
         return response()->json([
             'user' => $user,
             'token' => $token->plainTextToken,
-//            'roles' => $roles
         ]);
     }
 }
