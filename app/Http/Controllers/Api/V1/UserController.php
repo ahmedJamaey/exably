@@ -1,9 +1,8 @@
 <?php
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\UserRequest\StoreUserRequest;
+
 use App\Http\Requests\UserRequest\UpdateUserRequest;
-use App\Http\Resources\V1\UserResource\UserCollection;
 use App\Http\Resources\V1\UserResource\UserResource;
 use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
