@@ -38,7 +38,6 @@ return new class extends Migration
             $table->string('password');
             $table->string('gender');
             $table->string('phone')->unique()->nullable();
-            $table->string('system')->nullable()->default('system');
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

@@ -27,18 +27,12 @@ class User extends Authenticatable
         'password',
         'gender',
         'phone',
-        'system'
     ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
+
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
