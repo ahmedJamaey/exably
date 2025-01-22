@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make(123456789),
             'gender' => 'male',
             'phone' => '123456789',
-            'system' => 'system',
         ]);
     }
 }

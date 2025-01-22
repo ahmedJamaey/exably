@@ -16,9 +16,12 @@ class LoginController extends controller
             'email' => 'required|string|email',
             'password' => 'required|string'
         ]);
+
         if(Auth::attempt($request->only(['email', 'password']))){
-          $user = User::query()->where('email', $request->email)->first();
+          $user = User::query()->where('email', $request->input('email'))->first();
+
           $token = $user->createToken('authToken')->plainTextToken;
+
           return response()->json([
               'token' => $token,
           ]);
