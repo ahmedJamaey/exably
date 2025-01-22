@@ -1,19 +1,21 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\V1\Auth\LoginController;
+use App\Http\Controllers\Api\V1\Auth\ForgotPasswordController;
+use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
+use App\Http\Controllers\Api\V1\Auth\ResetPasswordController;
+use App\Http\Controllers\Api\V1\Auth\EmailVerificationNotificationController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
-});
 
-Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+Route::post('/login', loginController::class)
     ->middleware('guest')
     ->name('login');
 
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']);
 
-Route::post('/register', [RegisteredUserController::class, 'store'])
-    ->middleware('guest')
-    ->name('register');
+Route::post('/email-resend', [EmailVerificationNotificationController::class, '__invoke'])->middleware('auth:sanctum');
+Route::post('verify-email/{id}/{hash}', VerifyEmailController::class)->middleware('auth:sanctum');
+
+
