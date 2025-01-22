@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Requests\Api\V1;
+namespace App\Http\Requests\Api\V1\PasswordRequest;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ForgotPasswordRequest extends FormRequest
@@ -22,9 +21,9 @@ class ForgotPasswordRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'البريد الإلكتروني مطلوب.',
-            'email.email' => 'يرجى إدخال بريد إلكتروني صالح.',
-            'email.exists' => 'البريد الإلكتروني غير موجود.',
+            'email.required' => 'Email is required.',
+            'email.email' => '  Email is not valid.',
+            'email.exists' => 'Email is already exists.',
         ];
     }
 }
